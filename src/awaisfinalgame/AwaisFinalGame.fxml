@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+
+      
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="awaisfinalgame.AwaisFinalGameController">
-	<!-- TODO Add Nodes -->
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="awaisfinalgame.AwaisFinalGameController">
+   <center>
+      <Canvas fx:id = "gameCanvas" height="700.0" width="1000.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
