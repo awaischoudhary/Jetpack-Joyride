@@ -3,10 +3,11 @@ package awaisfinalgame;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
+import javafx.scene.media.AudioClip;
 
 public class Player {
 
@@ -20,13 +21,22 @@ public class Player {
 	 // moving position
 	double vy = 0.1;
 	double ay = 0.06;
+	
+	static int score = 0;
 
 	// assigning variables to keyboard values
 	String up = "SPACE";
 
-	// get the monkey image
-	String imageName = "images/playerStill.png";
-	Image image = new Image(imageName, 60, 50, false, false);
+	static String stillPlayerImage = "images/playerStill.png";
+	static String movingPlayerImage = "images/playerMoving1.png";
+	static String movingPlayerImage2 = "images/playerMoving2.png";
+	static String playerDead = "images/playerDead.png";
+	
+	static String curImageName = stillPlayerImage;
+	Image image = new Image(curImageName, 60, 50, false, false);
+	
+
+	long iterationsSincePlayerChange = 0;
 
 	// set canvas and graphics context
 	GraphicsContext gc;
@@ -44,7 +54,7 @@ public class Player {
 
 	// Monkey constructors
 	public Player(String imageName, GraphicsContext gc, Canvas gameCanvas, ArrayList<String> input) {
-		this.imageName = imageName;
+		this.curImageName = imageName;
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
 		this.input = input;
@@ -80,24 +90,25 @@ public class Player {
 		this.vy = vy;
 	}
 
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
 
 	public void move() {
 	
-		if (this.input.contains(this.up)) {
+		settingGravity();
+		
+		animatingPlayer();
+		        
+		this.gc.drawImage(this.image, this.x, this.y);	
+	}
+	
+	public void settingGravity() {
+		
+		if (this.input.contains(this.up) & curImageName != playerDead) {
 			this.vy = -1.5 ;
 		}  
 		
 		double y = this.y;
 		this.y += this.vy;
 		
-
         this.setY(this.getY() + vy);
           
         vy += ay;
@@ -108,8 +119,45 @@ public class Player {
         if (this.y < 0) {
 			this.y = y ;
 		}
-		
-		this.gc.drawImage(this.image, this.x, this.y);
 	}
+	
+	private void animatingPlayer() {	
+		if (curImageName != playerDead) {
+			if (iterationsSincePlayerChange > 10) {
+			   if (curImageName == movingPlayerImage2) {
+			    curImageName = movingPlayerImage;
+			    
+	    		}
+	    		else {
+	    		    curImageName = movingPlayerImage2;
+	    		}
+			   iterationsSincePlayerChange = 0;
+				score++;
+			}
+			
+			iterationsSincePlayerChange++;
+	       
+			if (this.y < 340) {
+				curImageName = stillPlayerImage;
+			}
+		}
+		
+		if (curImageName == playerDead) {
+			this.image = new Image(curImageName, 55, 40, false, false);
+		}
+		else {
+			this.image = new Image(curImageName, 55, 55, false, false);
+		}
+	}
+	
+	public Rectangle2D getBoundary() {
+		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
+	}
+	
+	public boolean collisionLaser(Laser laser) {
+		boolean collide = this.getBoundary().intersects(laser.getBoundary());
+		return collide;
+	}
+
  
 }

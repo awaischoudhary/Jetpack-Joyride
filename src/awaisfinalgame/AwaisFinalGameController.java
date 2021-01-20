@@ -10,7 +10,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AwaisFinalGameController {
@@ -23,6 +22,8 @@ public class AwaisFinalGameController {
 	GraphicsContext gc;
 	Scene gameScene;
 	Stage stage;
+	
+	boolean collidedLaser = false;
 
 	public void setScene(Stage stage) {
 		gameScene = stage.getScene();
@@ -39,6 +40,11 @@ public class AwaisFinalGameController {
 		ArrayList<Laser> laserList = new ArrayList<Laser>();
 		for (int i = 0; i < Laser.numLasers; i++) {
 			laserList.add(new Laser(gc, gameCanvas));
+		}
+		
+		ArrayList<Coin> coinList = new ArrayList<Coin>();
+		for (int i = 0; i < Coin.numCoins; i++) {
+			coinList.add(new Coin(gc, gameCanvas));
 		}
 		
 		// when the key is pressed, check if key is in array list, if not add it
@@ -65,6 +71,7 @@ public class AwaisFinalGameController {
 
 		Player player = new Player(gc, gameCanvas, input);
 		
+		Score score = new Score(gc, gameCanvas);
 		
 
 		new AnimationTimer() {
@@ -74,10 +81,33 @@ public class AwaisFinalGameController {
 				gc.drawImage(background, 0, 0);
 
 				for (int i = 0; i < Laser.numLasers; i++) {
-					laserList.get(i).drawLaser();
+					laserList.get(i).move();
 				}
 				
+				for (int i = 0; i < Laser.numLasers; i++) {
+					Laser l = laserList.get(i);
+					
+					collidedLaser = player.collisionLaser(l);
+				
+					if (collidedLaser) {
+						player.vy = 2.0;
+						Laser.speed = 0;
+						Player.curImageName = Player.playerDead;
+					
+					}
+					if (player.getY() > 340 & Player.curImageName == Player.playerDead) {
+						// GAME IS OVER
+						System.out.println("Game Over");
+					}
+				}
+				
+				for (int i = 0; i < Coin.numCoins; i++) {
+					coinList.get(i).move();
+				}
+				
+				score.display(player);
 				player.move();
+				
 
 			}
 		}.start();
