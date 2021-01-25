@@ -11,14 +11,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage.setTitle("Jetpack Joyride");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("AwaisFinalGame.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("StartScreen.fxml"));
 			BorderPane root = (BorderPane) loader.load();
 			Scene scene = new Scene(root, 1000, 500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			AwaisFinalGameController controller = loader.getController();
+			//AwaisFinalGameController controller = loader.getController();
 			primaryStage.setScene(scene);
-			controller.setScene(primaryStage);
-			controller.gameLoop();
+			//controller.setScene(primaryStage);
+			//controller.gameLoop();
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

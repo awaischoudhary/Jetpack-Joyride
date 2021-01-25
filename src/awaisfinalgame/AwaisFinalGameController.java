@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class AwaisFinalGameController {
@@ -24,28 +25,54 @@ public class AwaisFinalGameController {
 	Stage stage;
 	
 	boolean collidedLaser = false;
+	boolean collidedMissile = false;
+	boolean collidedPowerup = false;
+
+	int backgroundX1 = 0;
+	int backgroundX2= 1000;
+	
 
 	public void setScene(Stage stage) {
 		gameScene = stage.getScene();
+	}
+	
+	public void setStage(Stage s) {
+		stage = s;
 	}
 
 	public void gameLoop() {
 
 		gc = gameCanvas.getGraphicsContext2D();
-		Image background = new Image("images/background.png", 1000, 500, false, false);
+		Image background1 = new Image("images/background.png", 1000, 500, false, false);
+		Image background2 = new Image("images/background.png", 1000, 500, false, false);
 
 		// ArrayList for keyboard input
 		ArrayList<String> input = new ArrayList<String>();
+		
 
 		ArrayList<Laser> laserList = new ArrayList<Laser>();
 		for (int i = 0; i < Laser.numLasers; i++) {
-			laserList.add(new Laser(gc, gameCanvas));
+			laserList.add(new Laser(gc, gameCanvas, i));
 		}
 		
 		ArrayList<Coin> coinList = new ArrayList<Coin>();
 		for (int i = 0; i < Coin.numCoins; i++) {
-			coinList.add(new Coin(gc, gameCanvas));
+			coinList.add(new Coin(gc, gameCanvas, i));
+			if (Coin.y < 0) {
+				Coin.y = (int)(Math.random()*(380));
+			}
 		}
+		
+		ArrayList<Missile> missileList = new ArrayList<Missile>();
+		for (int i = 0; i < Missile.numMissiles; i++) {
+			missileList.add(new Missile(gc, gameCanvas));
+		}
+		
+		ArrayList<MissileWarning> missileWarningList = new ArrayList<MissileWarning>();
+		for (int i = 0; i < MissileWarning.numWarning; i++) {
+			missileWarningList.add(new MissileWarning(gc, gameCanvas));
+		}
+		
 		
 		// when the key is pressed, check if key is in array list, if not add it
 		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -69,19 +96,73 @@ public class AwaisFinalGameController {
 			}
 		});
 
+		gameScene.setOnMousePressed(e->{
+			String code = e.getButton().toString();
+			if (!input.contains(code))
+				input.add(code);
+		});
+		
+		gameScene.setOnMouseReleased(e->{
+			String code = e.getButton().toString();
+			if (input.contains(code))
+				input.remove(code);
+		});
+		
 		Player player = new Player(gc, gameCanvas, input);
 		
 		Score score = new Score(gc, gameCanvas);
 		
-
+		Powerup powerup = new Powerup(gc, gameCanvas);
+		
+		
 		new AnimationTimer() {
 			@Override
 			public void handle(long currentNanoTime) {
 				gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
-				gc.drawImage(background, 0, 0);
+				backgroundX1-= 2;
+				backgroundX2-= 2;		
+				if (backgroundX1 <= -1000) {
+					backgroundX1 = 1000;
+				}
+				if (backgroundX2 <= -1000) {
+					backgroundX2 = 1000;
+				}
+
+				gc.drawImage(background1, backgroundX1, 0);
+				gc.drawImage(background2, backgroundX2, 0);	
+				
 
 				for (int i = 0; i < Laser.numLasers; i++) {
 					laserList.get(i).move();
+				}
+				
+				for (int i = 0; i < MissileWarning.numWarning; i++) {
+					missileWarningList.get(i).move();
+				}
+				
+
+				for (int i = 0; i <  Missile.numMissiles; i++) {
+					Missile m = missileList.get(i);
+					
+					collidedMissile = player.collisionMissile(m);
+				
+					if (collidedMissile) {
+						player.vy = 3.5;
+						Player.curImageName = Player.playerDead;
+						Missile.x = -100;
+					
+					}
+					if (player.getY() > 340 & Player.curImageName == Player.playerDead) {
+						System.out.println("Game Over");
+						stop();
+					}
+				}
+				
+				collidedPowerup = player.collisionPowerup(powerup);
+				
+				if (collidedPowerup) {
+					Powerup.y = 1000;
+					
 				}
 				
 				for (int i = 0; i < Laser.numLasers; i++) {
@@ -90,23 +171,32 @@ public class AwaisFinalGameController {
 					collidedLaser = player.collisionLaser(l);
 				
 					if (collidedLaser) {
-						player.vy = 2.0;
-						Laser.speed = 0;
 						Player.curImageName = Player.playerDead;
-					
+						stop();
 					}
 					if (player.getY() > 340 & Player.curImageName == Player.playerDead) {
 						// GAME IS OVER
 						System.out.println("Game Over");
+						stop();
 					}
 				}
 				
 				for (int i = 0; i < Coin.numCoins; i++) {
 					coinList.get(i).move();
+					if (Coin.y < 0) {
+						Coin.y = (int)(Math.random()*(380));
+					}
 				}
 				
 				score.display(player);
+				powerup.move();
+				for (int i = 0; i < Missile.numMissiles; i++) {
+					missileList.get(i).move();
+				}
+				
 				player.move();
+			
+
 				
 
 			}

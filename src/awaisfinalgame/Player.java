@@ -7,20 +7,19 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
 
 public class Player {
 
 	// x and y positions
-	double x = 100;
-	double y = 100;
+	static double x = 100;
+	static double y = 100;
 
 	// monkey speed
 	int speed = 3;
 
 	 // moving position
-	double vy = 0.1;
-	double ay = 0.06;
+	static double vy = 0.1;
+	static double ay = 0.06;
 	
 	static int score = 0;
 
@@ -102,9 +101,11 @@ public class Player {
 	
 	public void settingGravity() {
 		
-		if (this.input.contains(this.up) & curImageName != playerDead) {
-			this.vy = -1.5 ;
+		if (curImageName != playerDead) {
+		if (this.input.contains(this.up) || this.input.contains("PRIMARY")) {
+			this.vy = -2.0 ;
 		}  
+		}
 		
 		double y = this.y;
 		this.y += this.vy;
@@ -143,8 +144,11 @@ public class Player {
 		}
 		
 		if (curImageName == playerDead) {
-			this.image = new Image(curImageName, 55, 40, false, false);
+			this.image = new Image(curImageName, 50, 35, false, false);
 		}
+		else if (curImageName == movingPlayerImage || curImageName == movingPlayerImage2) {
+			this.image = new Image(curImageName, 45, 55, false, false);
+		}	
 		else {
 			this.image = new Image(curImageName, 55, 55, false, false);
 		}
@@ -156,6 +160,15 @@ public class Player {
 	
 	public boolean collisionLaser(Laser laser) {
 		boolean collide = this.getBoundary().intersects(laser.getBoundary());
+		return collide;
+	}
+	public boolean collisionMissile(Missile missile) {
+		boolean collide = this.getBoundary().intersects(missile.getBoundary());
+		return collide;
+	}
+	
+	public boolean collisionPowerup(Powerup powerup) {
+		boolean collide = this.getBoundary().intersects(powerup.getBoundary());
 		return collide;
 	}
 

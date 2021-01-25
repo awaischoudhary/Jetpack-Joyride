@@ -5,68 +5,58 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 
-public class Laser {
+public class Powerup {
 
-	 static int numLasers = 3;
-	 
 	// x and y positions
 	double x;
-	double y;
-	
-	static double speed = 2;
-	
-	double dx= 0;
-	
-	// get the banana image 
-	String imageName = "images/laser.png";
-	Image image = new Image(imageName, 50, 140, false, false);
-	
+	static double y;
+
+	int speed = 0;
+
+	double dx = 0;
+
+	// get the banana image
+	String imageName = "images/powerup.png";
+	Image image = new Image(imageName, 60, 60, false, false);
+
 	// set canvas and graphics context
 	GraphicsContext gc;
 	@FXML
 	Canvas gameCanvas;
 
-	// banana constructors
-	public Laser(GraphicsContext gc, Canvas gameCanvas) {
+	public Powerup(GraphicsContext gc, Canvas gameCanvas) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
+		randomPowerup();
 	}
 
-	// banana constructors
-	public Laser(String imageName, GraphicsContext gc, Canvas gameCanvas) {
+	public Powerup(String imageName, GraphicsContext gc, Canvas gameCanvas) {
 		this.imageName = imageName;
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
-	}
-	
-	public Laser(GraphicsContext gc, Canvas gameCanvas, int laserIndex) {
-		this.gc = gc;
-		this.gameCanvas = gameCanvas;
-		randomLaser(laserIndex);
+		randomPowerup();
 	}
 
-	public void randomLaser(int laserIndex) {
-		this.x = 1000+300*laserIndex;
-		this.y = (int)(Math.random()*(400-this.image.getHeight()));
+	public void randomPowerup() {
+		this.x = 1100;
+		this.y = 100;
 	}
-	
+
 	public void move() {
-		
+		if (Player.score % 100 == 0 && Player.score > 1) {
+			this.speed = 2;
+			this.y = 100;
+		}
 		this.dx = -this.speed;	
 		this.x += this.dx;
 		
-		PixelReader reader = this.image.getPixelReader();
-		reader.getColor(20,20).getOpacity();
-		System.out.println(reader);
-		
-		if (this.x < 0-image.getWidth()) {
-			randomLaser(0);
+		if (this.x < -this.image.getWidth()) {
+			this.x = 1100;
+			this.speed = 0;
 		}
-		
 		gc.drawImage(this.image, this.x, this.y);
-		
+
 	}
 
 	public double getX() {
@@ -85,7 +75,6 @@ public class Laser {
 		this.y = y;
 	}
 
-
 	public double getDx() {
 		return dx;
 	}
@@ -101,7 +90,7 @@ public class Laser {
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
-	
+
 	public Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
 	}

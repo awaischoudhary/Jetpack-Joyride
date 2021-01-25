@@ -5,66 +5,58 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 
-public class Laser {
+public class Missile {
 
-	 static int numLasers = 3;
+	static int numMissiles = 1;
 	 
 	// x and y positions
-	double x;
+	static double x;
 	double y;
 	
-	static double speed = 2;
+	int speed = 10;
 	
 	double dx= 0;
 	
 	// get the banana image 
-	String imageName = "images/laser.png";
-	Image image = new Image(imageName, 50, 140, false, false);
+	String missile1 = "images/missile1.png";
+	String missile2 = "images/missile2.png";
+	String curMissile = missile1;
+	Image image = new Image(curMissile, 70, 70, false, false);
 	
 	// set canvas and graphics context
 	GraphicsContext gc;
 	@FXML
 	Canvas gameCanvas;
 
-	// banana constructors
-	public Laser(GraphicsContext gc, Canvas gameCanvas) {
+	public Missile(GraphicsContext gc, Canvas gameCanvas) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
+		randomMissile();
 	}
 
-	// banana constructors
-	public Laser(String imageName, GraphicsContext gc, Canvas gameCanvas) {
-		this.imageName = imageName;
+	public Missile(String imageName, GraphicsContext gc, Canvas gameCanvas) {
+		this.curMissile = imageName;
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
-	}
-	
-	public Laser(GraphicsContext gc, Canvas gameCanvas, int laserIndex) {
-		this.gc = gc;
-		this.gameCanvas = gameCanvas;
-		randomLaser(laserIndex);
+		randomMissile();
 	}
 
-	public void randomLaser(int laserIndex) {
-		this.x = 1000+300*laserIndex;
+	public void randomMissile() {
+		this.x = 1100;
 		this.y = (int)(Math.random()*(400-this.image.getHeight()));
 	}
 	
 	public void move() {
 		
-		this.dx = -this.speed;	
-		this.x += this.dx;
-		
-		PixelReader reader = this.image.getPixelReader();
-		reader.getColor(20,20).getOpacity();
-		System.out.println(reader);
-		
-		if (this.x < 0-image.getWidth()) {
-			randomLaser(0);
+		if (MissileWarning.curMissileWarning == MissileWarning.missileFinalWarning) {
+			this.y = MissileWarning.y;
+			this.dx = -this.speed;	
+			this.x += this.dx;
 		}
 		
+		
+
 		gc.drawImage(this.image, this.x, this.y);
 		
 	}
@@ -95,14 +87,15 @@ public class Laser {
 	}
 
 	public String getImageName() {
-		return imageName;
+		return curMissile;
 	}
 
 	public void setImageName(String imageName) {
-		this.imageName = imageName;
+		this.curMissile = imageName;
 	}
 	
 	public Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
 	}
 }
+

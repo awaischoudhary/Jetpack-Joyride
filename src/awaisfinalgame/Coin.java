@@ -11,17 +11,18 @@ public class Coin {
 
 	static int numCoins = 10;
 	 
+	static double y;
 	// x and y positions
 	double x;
-	double y;
+
 	
-	static double speed = 1.75;
+	static double speed = 2;
 	
 	double dx= 0;
 	
 	// get the banana image 
 	String imageName = "images/coin.png";
-	Image image = new Image(imageName, 20, 20, false, false);
+	Image image = new Image(imageName, 30, 30, false, false);
 	
 	// set canvas and graphics context
 	GraphicsContext gc;
@@ -39,13 +40,26 @@ public class Coin {
 		this.gameCanvas = gameCanvas;
 	}
 	
-
+	public Coin(GraphicsContext gc,  Canvas gameCanvas, int coinIndex) {
+		this.gc = gc;
+		this.gameCanvas = gameCanvas;
+		randomCoin(coinIndex);
+	}
+	
+	public void randomCoin(int coinIndex) {
+		this.x = 1000+20*coinIndex;
+		this.y = 250;
+	}
+	
 	public void move() {
-		this.x = 300;
-		this.y = 300;
-		for (int i = 0; i < numCoins; i++) {
-			this.x += 10;
+		
+		this.dx = -this.speed;	
+		this.x += this.dx;
+		
+		if (this.x < 0-image.getWidth()) {
+			randomCoin(0);
 		}
+	
 		gc.drawImage(this.image, this.x, this.y);
 		
 	}
