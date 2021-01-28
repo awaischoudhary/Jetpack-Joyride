@@ -19,10 +19,8 @@ public class Missile {
 	double dx= 0;
 	
 	// get the banana image 
-	String missile1 = "images/missile1.png";
-	String missile2 = "images/missile2.png";
-	String curMissile = missile1;
-	Image image = new Image(curMissile, 70, 70, false, false);
+	String curMissile = "images/missile1.png";
+	Image image = new Image(curMissile, 60, 30, false, false);
 	
 	// set canvas and graphics context
 	GraphicsContext gc;

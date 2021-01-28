@@ -27,7 +27,7 @@ public class AwaisFinalGameController {
 	boolean collidedLaser = false;
 	boolean collidedMissile = false;
 	boolean collidedPowerup = false;
-
+	int coinY;
 	int backgroundX1 = 0;
 	int backgroundX2= 1000;
 	
@@ -56,11 +56,10 @@ public class AwaisFinalGameController {
 		}
 		
 		ArrayList<Coin> coinList = new ArrayList<Coin>();
+		coinY = (int)(Math.random()*(370));
 		for (int i = 0; i < Coin.numCoins; i++) {
-			coinList.add(new Coin(gc, gameCanvas, i));
-			if (Coin.y < 0) {
-				Coin.y = (int)(Math.random()*(380));
-			}
+			coinList.add(new Coin(gc, gameCanvas, i, coinY));
+			
 		}
 		
 		ArrayList<Missile> missileList = new ArrayList<Missile>();
@@ -173,6 +172,7 @@ public class AwaisFinalGameController {
 					if (collidedLaser) {
 						Player.curImageName = Player.playerDead;
 						stop();
+
 					}
 					if (player.getY() > 340 & Player.curImageName == Player.playerDead) {
 						// GAME IS OVER
@@ -182,10 +182,7 @@ public class AwaisFinalGameController {
 				}
 				
 				for (int i = 0; i < Coin.numCoins; i++) {
-					coinList.get(i).move();
-					if (Coin.y < 0) {
-						Coin.y = (int)(Math.random()*(380));
-					}
+					coinList.get(i).move(i, coinY);		
 				}
 				
 				score.display(player);

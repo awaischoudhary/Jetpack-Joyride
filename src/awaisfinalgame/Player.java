@@ -159,9 +159,21 @@ public class Player {
 	}
 	
 	public boolean collisionLaser(Laser laser) {
-		boolean collide = this.getBoundary().intersects(laser.getBoundary());
+		int pixelsIn = 20;
+		int pixelsOut = 30;
+		int pixelsOver = 10;
+		int pixelsUnder = 10;
+			
+		if (this.y + image.getHeight() > laser.y+80 && this.y + image.getHeight() < laser.y+100) {
+		System.out.println("IN");
+		}
+	
+		boolean collide = this.x + image.getWidth() > laser.x + pixelsIn && this.x + image.getWidth() < laser.x + laser.image.getWidth() + pixelsOut 
+				&& this.y + image.getHeight() > laser.y + pixelsOver && this.y < laser.y + laser.image.getHeight() - pixelsUnder;
+		
 		return collide;
 	}
+	
 	public boolean collisionMissile(Missile missile) {
 		boolean collide = this.getBoundary().intersects(missile.getBoundary());
 		return collide;

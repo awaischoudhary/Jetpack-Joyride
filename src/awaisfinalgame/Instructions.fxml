@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="350.0" prefWidth="500.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="77.0" prefWidth="729.0" text="INSTRUCTIONS">
+               <font>
+                  <Font name="Marker Felt Thin" size="43.0" />
+               </font>
+            </Button>
+            <TextArea prefHeight="246.0" prefWidth="500.0" text="JETPACK JOYRIDE&#10;&#10;You are the runner, and your goal is to run as far as you can&#10;&#10;&#10;">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </TextArea>
+            <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="500.0" text="EXIT">
+               <font>
+                  <Font name="Marker Felt Thin" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</Pane>

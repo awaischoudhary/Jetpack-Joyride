@@ -21,7 +21,7 @@ public class Laser {
 	
 	// get the banana image 
 	String imageName = "images/laser.png";
-	Image image = new Image(imageName, 50, 140, false, false);
+	Image image = new Image(imageName, 45, 140, false, false);
 	
 	// set canvas and graphics context
 	GraphicsContext gc;
@@ -58,8 +58,7 @@ public class Laser {
 		this.x += this.dx;
 		
 		PixelReader reader = this.image.getPixelReader();
-		reader.getColor(20,20).getOpacity();
-		System.out.println(reader);
+		reader.getColor(0,0).getOpacity();
 		
 		if (this.x < 0-image.getWidth()) {
 			randomLaser(0);

@@ -11,7 +11,7 @@ public class Coin {
 
 	static int numCoins = 10;
 	 
-	static double y;
+	double y;
 	// x and y positions
 	double x;
 
@@ -40,24 +40,25 @@ public class Coin {
 		this.gameCanvas = gameCanvas;
 	}
 	
-	public Coin(GraphicsContext gc,  Canvas gameCanvas, int coinIndex) {
+	public Coin(GraphicsContext gc,  Canvas gameCanvas, int coinIndex, int coinY) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
-		randomCoin(coinIndex);
+		randomCoin(coinIndex, coinY);
 	}
 	
-	public void randomCoin(int coinIndex) {
+	public void randomCoin(int coinIndex, int coinY) {
 		this.x = 1000+20*coinIndex;
-		this.y = 250;
+		this.y = coinY;
 	}
 	
-	public void move() {
+	public void move(int coinIndex, int coinY) {
 		
 		this.dx = -this.speed;	
 		this.x += this.dx;
 		
-		if (this.x < 0-image.getWidth()) {
-			randomCoin(0);
+		if (this.x < -150) {
+			this.x = 1050;
+			this.y = coinY;
 		}
 	
 		gc.drawImage(this.image, this.x, this.y);
