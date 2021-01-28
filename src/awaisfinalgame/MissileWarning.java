@@ -11,7 +11,6 @@ public class MissileWarning {
 
 	static int numWarning = 1;
 	 
-	int speed = 2;
 	
 	double dy= 0;
 	

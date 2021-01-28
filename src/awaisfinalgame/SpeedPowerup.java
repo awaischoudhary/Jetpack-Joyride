@@ -7,9 +7,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 
-public class Player {
+public class SpeedPowerup {
+	
 
 	// x and y positions
 	static double x = 100;
@@ -19,21 +19,23 @@ public class Player {
 	int speed = 3;
 
 	 // moving position
-	static double vy = 0.1;
-	static double ay = 0.06;
+	static double vy = 0.2;
+	static double ay = 0.12;
 	
 	static int score = 0;
 
 	// assigning variables to keyboard values
 	String up = "SPACE";
 
-	static String stillPlayerImage = "images/playerStill.png";
-	static String movingPlayerImage = "images/playerMoving1.png";
-	static String movingPlayerImage2 = "images/playerMoving2.png";
 	static String playerDead = "images/playerDead.png";
 	
-	static String curImageName = stillPlayerImage;
-	Image image = new Image(curImageName, 60, 50, false, false);
+	static String stillPlayerSpeed = "images/playerStillSpeed.png";
+	static String movingPlayerSpeed = "images/playerMovingSpeed1.png";
+	static String movingPlayerSpeed2 = "images/playerMovingSpeed2.png";
+
+	
+	static String curImageName = stillPlayerSpeed;
+	static Image image = new Image(curImageName, 60, 50, false, false);
 	
 
 	long iterationsSincePlayerChange = 0;
@@ -45,7 +47,7 @@ public class Player {
 
 	ArrayList<String> input;
 
-	public Player(GraphicsContext gc, Canvas gameCanvas, ArrayList<String> input) {
+	public SpeedPowerup(GraphicsContext gc, Canvas gameCanvas, ArrayList<String> input) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
 		this.input = input;
@@ -53,7 +55,7 @@ public class Player {
 	}
 
 	// Monkey constructors
-	public Player(String imageName, GraphicsContext gc, Canvas gameCanvas, ArrayList<String> input) {
+	public SpeedPowerup(String imageName, GraphicsContext gc, Canvas gameCanvas, ArrayList<String> input) {
 		this.curImageName = imageName;
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
@@ -104,7 +106,7 @@ public class Player {
 		
 		if (curImageName != playerDead) {
 		if (this.input.contains(this.up) || this.input.contains("PRIMARY")) {
-			this.vy = -2.0 ;
+			this.vy = -4.0 ;
 		}  
 		}
 		
@@ -126,12 +128,12 @@ public class Player {
 	private void animatingPlayer() {	
 		if (curImageName != playerDead) {
 			if (iterationsSincePlayerChange > 10) {
-			   if (curImageName == movingPlayerImage2) {
-			    curImageName = movingPlayerImage;
+			   if (curImageName == movingPlayerSpeed2) {
+			    curImageName = movingPlayerSpeed;
 			    
 	    		}
 	    		else {
-	    		    curImageName = movingPlayerImage2;
+	    		    curImageName = movingPlayerSpeed2;
 	    		}
 			   iterationsSincePlayerChange = 0;
 				score++;
@@ -140,14 +142,14 @@ public class Player {
 			iterationsSincePlayerChange++;
 	       
 			if (this.y < 340) {
-				curImageName = stillPlayerImage;
+				curImageName = stillPlayerSpeed;
 			}
 		}
 		
 		if (curImageName == playerDead) {
 			this.image = new Image(curImageName, 50, 35, false, false);
 		}
-		else if (curImageName == movingPlayerImage || curImageName == movingPlayerImage2) {
+		else if (curImageName == movingPlayerSpeed || curImageName == movingPlayerSpeed2) {
 			this.image = new Image(curImageName, 45, 55, false, false);
 		}	
 		else {
@@ -155,7 +157,7 @@ public class Player {
 		}
 	}
 	
-	public Rectangle2D getBoundary() {
+	public  Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
 	}
 	
@@ -186,5 +188,9 @@ public class Player {
 		return collide;
 	}
 	
-
+	
+	
 }
+
+
+

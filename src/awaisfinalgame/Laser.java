@@ -15,7 +15,7 @@ public class Laser {
 	double x;
 	double y;
 	
-	static double speed = 2;
+	static double speed = 2.1;
 	
 	double dx= 0;
 	
@@ -57,8 +57,7 @@ public class Laser {
 		this.dx = -this.speed;	
 		this.x += this.dx;
 		
-		PixelReader reader = this.image.getPixelReader();
-		reader.getColor(0,0).getOpacity();
+		
 		
 		if (this.x < 0-image.getWidth()) {
 			randomLaser(0);

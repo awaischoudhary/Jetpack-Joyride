@@ -12,7 +12,7 @@ public class Powerup {
 	double x;
 	static double y;
 
-	int speed = 0;
+	double speed = 0;
 
 	double dx = 0;
 

@@ -25,8 +25,13 @@ public class Score {
 	public void display(Player player) {
 		String scoreString = Player.score + "m";
 		gc.setFont(Font.font("Rockwell", FontWeight.BOLD, 20));
-		gc.setFill(Color.GREY); 
+		gc.setFill(Color.WHITE); 
 		gc.fillText(scoreString, 5 ,20);
+		
+		String coinString = Coin.coinScore + "c";
+		gc.setFont(Font.font("Rockwell", FontWeight.BOLD, 20));
+		gc.setFill(Color.GOLD); 
+		gc.fillText(coinString, 5 ,40);
 
 	}
 

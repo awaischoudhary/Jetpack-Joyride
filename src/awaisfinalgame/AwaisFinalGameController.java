@@ -27,10 +27,11 @@ public class AwaisFinalGameController {
 	boolean collidedLaser = false;
 	boolean collidedMissile = false;
 	boolean collidedPowerup = false;
+	static boolean collidedCoin = false;
 	int coinY;
 	int backgroundX1 = 0;
 	int backgroundX2= 1000;
-	
+
 
 	public void setScene(Stage stage) {
 		gameScene = stage.getScene();
@@ -58,7 +59,7 @@ public class AwaisFinalGameController {
 		ArrayList<Coin> coinList = new ArrayList<Coin>();
 		coinY = (int)(Math.random()*(370));
 		for (int i = 0; i < Coin.numCoins; i++) {
-			coinList.add(new Coin(gc, gameCanvas, i, coinY));
+			coinList.add(new Coin(gc, gameCanvas, i));
 			
 		}
 		
@@ -109,32 +110,45 @@ public class AwaisFinalGameController {
 		
 		Player player = new Player(gc, gameCanvas, input);
 		
+		SpeedPowerup playerSpeed = new SpeedPowerup(gc, gameCanvas, input);
+
+		
 		Score score = new Score(gc, gameCanvas);
 		
 		Powerup powerup = new Powerup(gc, gameCanvas);
-		
+	
 		
 		new AnimationTimer() {
 			@Override
 			public void handle(long currentNanoTime) {
 				gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
-				backgroundX1-= 2;
-				backgroundX2-= 2;		
+		
+				
 				if (backgroundX1 <= -1000) {
 					backgroundX1 = 1000;
 				}
 				if (backgroundX2 <= -1000) {
 					backgroundX2 = 1000;
 				}
-
+				
+	
+				if (player.score % 200 == 0 && player.score > 1) {
+					Laser.speed += 0.1;
+					Coin.speed += 0.1;
+					Missile.speed += 0.1;
+				}
+				
+				backgroundX1-=2;
+				backgroundX2-=2;
+				
 				gc.drawImage(background1, backgroundX1, 0);
 				gc.drawImage(background2, backgroundX2, 0);	
 				
-
-				for (int i = 0; i < Laser.numLasers; i++) {
-					laserList.get(i).move();
+				for (int i = 0; i < Coin.numCoins; i++) {
+					coinList.get(i).move(i);		
 				}
-				
+
+			
 				for (int i = 0; i < MissileWarning.numWarning; i++) {
 					missileWarningList.get(i).move();
 				}
@@ -161,8 +175,10 @@ public class AwaisFinalGameController {
 				
 				if (collidedPowerup) {
 					Powerup.y = 1000;
-					
+				
+										
 				}
+				
 				
 				for (int i = 0; i < Laser.numLasers; i++) {
 					Laser l = laserList.get(i);
@@ -170,6 +186,8 @@ public class AwaisFinalGameController {
 					collidedLaser = player.collisionLaser(l);
 				
 					if (collidedLaser) {
+						
+						
 						Player.curImageName = Player.playerDead;
 						stop();
 
@@ -181,12 +199,28 @@ public class AwaisFinalGameController {
 					}
 				}
 				
+
 				for (int i = 0; i < Coin.numCoins; i++) {
-					coinList.get(i).move(i, coinY);		
+					Coin c = coinList.get(i);
+					
+					collidedCoin = player.collisionCoin(c);
+					
+					if (collidedCoin) {
+						coinList.get(i).collisionRespawning();
+						Coin.coinScore++;
+						
+					}
+				}
+					
+				
+				powerup.move();
+				
+				for (int i = 0; i < Laser.numLasers; i++) {
+					laserList.get(i).move();
 				}
 				
+				
 				score.display(player);
-				powerup.move();
 				for (int i = 0; i < Missile.numMissiles; i++) {
 					missileList.get(i).move();
 				}
