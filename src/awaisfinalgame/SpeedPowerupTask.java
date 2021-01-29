@@ -9,62 +9,48 @@ public class SpeedPowerupTask extends TimerTask{
 	// seconds powered up
 	public static int numSecondPoweredUp = 0;
 	
+	static String stillSpeedImage = "images/playerStillSpeed.png";
+	static String movingPlayerSpeed = "images/playerMovingSpeed1.png";
+	static String movingPlayerSpeed2 = "images/playerMovingSpeed2.png";
+	
 
     Timer timer;
+
+	public SpeedPowerupTask(Timer t) {
+		this.timer = t;
     
-    ArrayList<Laser> lasers;
-    ArrayList<Missile> missiles;
-
-
-	// powerup timer constructor
-	public SpeedPowerupTask(ArrayList<Laser> laserList, ArrayList<Missile> missileList, Timer t) {
-        this.timer = t;
-        this.lasers = laserList;
-        this.missiles = missileList;
 	}
-	
-// 	public SpeedPowerupTask(ArrayList<Laser> laserList, ArrayList<Missile> missileList, Player player, Timer t) {
-//         this.timer = t;
-//         this.lasers = laserList;
-//         this.missiles = missileList;
-// 	}
-
-	/* Description: speeds the monkey up until porweup second is 6 
-	 * Precondition: takes nothing in
-	 * Postcondition: monkey speed up for 6 seconds
-	 */
+    
 	public void run() {
 		
-		// if the numSecondPowerup is 0 add by 1 and call speed method
+		
+		double missilePrevSpeed = Missile.speed;
+		double laserPrevSpeed = Laser.speed;
+		double coinPrevSpeed = Coin.speed;
+		
+		
 		if (numSecondPoweredUp == 0) {
-            // monkey.speedPowerup();
-            for (int i = 0; i < lasers.size(); i++) {
-                Laser laser = lasers.get(i);
-                //laser.slowDown(); // laser.deactivate()
-            }
-            for (int i = 0; i < missiles.size(); i++) {
-                Missile missile = missiles.get(i);
-                //missile.slowDown();
-            }
+ 			Coin.speed = 2;
+			Missile.speed = 4;
+			Laser.speed = 2;
             // player.makeBlue();
+			Player.stillPlayerImage = stillSpeedImage;
+			Player.movingPlayerImage = movingPlayerSpeed;
+			Player.movingPlayerImage2 = movingPlayerSpeed2;
 			numSecondPoweredUp += 1;
 		} 
-		// if the numSecondPowerup is 6 set it to 0 again
-		// speed down monkey, and cancel timer
-		else if (numSecondPoweredUp == 6) {
-			for (int i = 0; i < lasers.size(); i++) {
-                Laser laser = lasers.get(i);
-                //laser.resetSpeed();
-            }
-            for (int i = 0; i < missiles.size(); i++) {
-                Missile missile = missiles.get(i);
-                //missile.resetSpeed();
-            }
-            // player.unBlue();
+
+		else if (numSecondPoweredUp == 10) {
+			Missile.speed = 6+ missilePrevSpeed;
+			Laser.speed = 0.5+laserPrevSpeed;
+			Coin.speed = 0.5+coinPrevSpeed;
+			Player.stillPlayerImage ="images/playerStill.png";
+			Player.movingPlayerImage = "images/playerMoving1.png";
+			Player.movingPlayerImage2 = "images/playerMoving2.png";
+			
 			numSecondPoweredUp = 0;
 			timer.cancel();
 		} 
-		// otherwise increase second powerup
 		else {
 			numSecondPoweredUp++;
 			

@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
 
 public class Laser {
 
-	 static int numLasers = 3;
+	static int numLasers = 3;
 	 
 	// x and y positions
-	double x;
-	double y;
+	 double x;
+	 double y;
 	
 	static double speed = 2.1;
 	
@@ -102,4 +102,5 @@ public class Laser {
 	public Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
 	}
+	
 }

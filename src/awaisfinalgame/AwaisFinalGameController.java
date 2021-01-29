@@ -1,17 +1,25 @@
 package awaisfinalgame;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+
 import javafx.stage.Stage;
+
 
 public class AwaisFinalGameController {
 
@@ -31,8 +39,11 @@ public class AwaisFinalGameController {
 	int coinY;
 	int backgroundX1 = 0;
 	int backgroundX2= 1000;
-	int powerupHit = 0;
+	int powerupHit = (int)(Math.random()*100);
+	double bgSpeed1 = 2;
+	static boolean invisible = false;
 
+	int iterations = 0;
 
 	public void setScene(Stage stage) {
 		gameScene = stage.getScene();
@@ -113,14 +124,13 @@ public class AwaisFinalGameController {
 		
 		Score score = new Score(gc, gameCanvas);
 		
-		//Powerup powerup = new Powerup(gc, gameCanvas);
-	
+		Powerup powerup = new Powerup(gc, gameCanvas);		
 		
 		new AnimationTimer() {
 			@Override
 			public void handle(long currentNanoTime) {
 				gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
-		
+			
 				
 				if (backgroundX1 <= -1000) {
 					backgroundX1 = 1000;
@@ -129,12 +139,18 @@ public class AwaisFinalGameController {
 					backgroundX2 = 1000;
 				}
 				
-	
-				if (player.score % 200 == 0 && player.score > 1) {
-					Laser.speed += 0.1;
-					Coin.speed += 0.1;
-					Missile.speed += 0.1;
+				if (iterations > 10) {
+					if (player.score % 20 == 0 && player.score > 1) {
+						Laser.speed += 0.1;
+						Coin.speed += 0.1;
+						Missile.speed += 0.1;
+					}
+					iterations=0;
 				}
+				iterations++;
+				
+	
+				
 				
 				backgroundX1-=2;
 				backgroundX2-=2;
@@ -157,7 +173,7 @@ public class AwaisFinalGameController {
 					
 					collidedMissile = player.collisionMissile(m);
 				
-					if (collidedMissile) {
+					if (collidedMissile && !invisible) {
 						player.vy = 3.5;
 						Player.curImageName = Player.playerDead;
 						Missile.x = -100;
@@ -169,29 +185,22 @@ public class AwaisFinalGameController {
 					}
 				}
 				
-//				collidedPowerup = player.collisionPowerup(powerup);
-//				
-//				if (collidedPowerup) {
-//					Powerup.y = 1000;
-//
-//					// initiate a timer with the corresponding (polymorphism) timer task 
-//					// powerup.timer.schedule(powerup.applyPowerupTask, 0, 1000)
-//
-//					// this will use polymorphism, it will know which specific
-//					// powerups appyPowerup function to use
-//					powerup.applyPowerup(laserList, missileList);
-//				// 	powerup.applyPowerup(laserList, missileList, player);
-//					
-//					
-//					// change the powerup for next time
-//					powerupHit++;
-//					if (powerupHit%2 == 0) {
-//						powerup = new SpeedPowerup();
-//					}
-//					else if (powerupHit%2 == 1) {
-//						//powerup = new LaserPowerup(gc, gameCanvas);
-//					}
-//				}
+				collidedPowerup = player.collisionPowerup(powerup);
+				
+				if (collidedPowerup) {
+					Powerup.y = 1000;
+					
+					
+					// change the powerup for next time
+					powerupHit++;
+
+					if (powerupHit%2 == 0) {	
+						SpeedPowerup.applyPowerup();
+					}
+					else if (powerupHit%2 == 1) {
+						InvisiblePowerup.applyPowerup();
+					}
+				}
 				
 										
 	
@@ -202,14 +211,7 @@ public class AwaisFinalGameController {
 					
 					collidedLaser = player.collisionLaser(l);
 				
-					if (collidedLaser) {
-				
-						
-						}
-		
-						
-						
-						
+					if (collidedLaser && !invisible) {
 						
 						
 						Player.curImageName = Player.playerDead;
@@ -237,7 +239,7 @@ public class AwaisFinalGameController {
 				}
 					
 				
-				//powerup.move();
+				powerup.move();
 				
 				for (int i = 0; i < Laser.numLasers; i++) {
 					laserList.get(i).move();
@@ -251,10 +253,84 @@ public class AwaisFinalGameController {
 				
 				player.move();
 			
-
+			
 				
 
 			}
 		}.start();
 	}
+	
+//	/* Description: changes to end screen
+//	 * Precondition: does not take in anything
+//	 * Postcondition: changes the scene
+//	 */
+//	public void changeToEndScreen() {
+//
+//		try {
+//			FXMLLoader loader = new FXMLLoader();  
+//	        loader.setLocation(getClass().getResource("EndScreen.fxml"));  
+//	        BorderPane sceneParent = (BorderPane)loader.load();   
+//	            
+//	        Scene scene = new Scene(sceneParent);
+//			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//
+//	        MonkeyGameController controller = loader.getController();
+//	        controller.getScore(Score.gameScore);
+//			stage.setScene(scene);
+//			stage.show();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	
+//	
+//	/* Description: pass on score to end screen
+//	 * Precondition: takes in gameScore
+//	 * Postcondition: displays the score in a label
+//	 */
+//	public void getScore(int gameScore) {		
+//		String finalScore = "Your Score Was: " + gameScore;	
+//		displayScore.setText(finalScore);
+//	}
+//
+//	/* Description: endClickHandler, handles buttons on end screen
+//	 * Precondition: takes in ActionEvent
+//	 * Postcondition: allows user to play again or quit
+//	 */
+//	public void endClickHandler(ActionEvent evt) throws IOException {
+//		Button clickedButton = (Button) evt.getTarget();
+//		String buttonLabel = clickedButton.getText();
+//
+//		if (buttonLabel.equals("PLAY AGAIN")) {
+//			changeToGame(evt);
+//		} else if (buttonLabel.equals("QUIT")) {
+//			System.exit(0);
+//		}
+//	}
+//
+//	/* Description: change the scene to main game
+//	 * Precondition: takes in ActionEvent
+//	 * Postcondition: allows the user to play the game again when game is over
+//	 */
+//	public void changeToGame(ActionEvent evt) throws IOException {
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setLocation(getClass().getResource("AwaisFinalGame.fxml"));
+//		BorderPane sceneParent = (BorderPane) loader.load();
+//
+//		Scene scene = new Scene(sceneParent);
+//
+//		AwaisFinalGameController controller = loader.getController();
+//
+//		Stage stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+//
+//		stage.setScene(scene);
+//		controller.setScene(stage);
+//		controller.setStage(stage);
+//		controller.gameLoop();
+//
+//		stage.show();
+//	}
+
+	
 }

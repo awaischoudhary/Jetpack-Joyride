@@ -8,7 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public abstract class Powerup {
+public class Powerup {
 
 	// x and y positions
 	double x;
@@ -27,6 +27,10 @@ public abstract class Powerup {
 	@FXML
 	Canvas gameCanvas;
 
+	public Powerup() {
+		
+	}
+	
 	public Powerup(GraphicsContext gc, Canvas gameCanvas) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
@@ -40,9 +44,6 @@ public abstract class Powerup {
 		randomPowerup();
 	}
 	
-    // pass whatever objects you want to manipulate for the powerup (e.g. player)
-	public abstract void applyPowerup(ArrayList<Laser> laserList, ArrayList<Missile> missileList);
-// 	public abstract void applyPowerup(ArrayList<Laser> laserList, ArrayList<Missile> missileList, Player player);
 
 	public void randomPowerup() {
 		this.x = 1100;
@@ -50,7 +51,7 @@ public abstract class Powerup {
 	}
 
 	public void move() {
-		if (Player.score % 100 == 0 && Player.score > 1) {
+		if (Player.score % 40 == 0 && Player.score > 1) {
 			this.speed = 2;
 			this.y = 100;
 		}

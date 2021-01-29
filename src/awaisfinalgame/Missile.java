@@ -14,7 +14,7 @@ public class Missile {
 	static double x;
 	double y;
 	
-	static int speed = 10;
+	static double speed = 10;
 	
 	double dx= 0;
 	
