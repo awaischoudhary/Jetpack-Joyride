@@ -1,12 +1,14 @@
 package awaisfinalgame;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Powerup {
+public abstract class Powerup {
 
 	// x and y positions
 	double x;
@@ -37,6 +39,10 @@ public class Powerup {
 		this.gameCanvas = gameCanvas;
 		randomPowerup();
 	}
+	
+    // pass whatever objects you want to manipulate for the powerup (e.g. player)
+	public abstract void applyPowerup(ArrayList<Laser> laserList, ArrayList<Missile> missileList);
+// 	public abstract void applyPowerup(ArrayList<Laser> laserList, ArrayList<Missile> missileList, Player player);
 
 	public void randomPowerup() {
 		this.x = 1100;

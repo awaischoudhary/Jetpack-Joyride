@@ -59,10 +59,10 @@ public class StartScreenController {
 	private void openInstructions() {
 		try {
 			// load the pop up you created
-			Pane instructions = (Pane) FXMLLoader.load(getClass().getResource("Instructions.fxml"));
+			Pane instructions = (Pane) FXMLLoader.load(getClass().getResource("Settings.fxml"));
 
 			// create a new scene
-			Scene instructionsScene = new Scene(instructions, 500, 250);
+			Scene instructionsScene = new Scene(instructions, 500, 350);
 
 			secondaryStage = new Stage();
 			secondaryStage.setScene(instructionsScene);

@@ -31,6 +31,7 @@ public class AwaisFinalGameController {
 	int coinY;
 	int backgroundX1 = 0;
 	int backgroundX2= 1000;
+	int powerupHit = 0;
 
 
 	public void setScene(Stage stage) {
@@ -110,12 +111,9 @@ public class AwaisFinalGameController {
 		
 		Player player = new Player(gc, gameCanvas, input);
 		
-		SpeedPowerup playerSpeed = new SpeedPowerup(gc, gameCanvas, input);
-
-		
 		Score score = new Score(gc, gameCanvas);
 		
-		Powerup powerup = new Powerup(gc, gameCanvas);
+		//Powerup powerup = new Powerup(gc, gameCanvas);
 	
 		
 		new AnimationTimer() {
@@ -171,13 +169,32 @@ public class AwaisFinalGameController {
 					}
 				}
 				
-				collidedPowerup = player.collisionPowerup(powerup);
-				
-				if (collidedPowerup) {
-					Powerup.y = 1000;
+//				collidedPowerup = player.collisionPowerup(powerup);
+//				
+//				if (collidedPowerup) {
+//					Powerup.y = 1000;
+//
+//					// initiate a timer with the corresponding (polymorphism) timer task 
+//					// powerup.timer.schedule(powerup.applyPowerupTask, 0, 1000)
+//
+//					// this will use polymorphism, it will know which specific
+//					// powerups appyPowerup function to use
+//					powerup.applyPowerup(laserList, missileList);
+//				// 	powerup.applyPowerup(laserList, missileList, player);
+//					
+//					
+//					// change the powerup for next time
+//					powerupHit++;
+//					if (powerupHit%2 == 0) {
+//						powerup = new SpeedPowerup();
+//					}
+//					else if (powerupHit%2 == 1) {
+//						//powerup = new LaserPowerup(gc, gameCanvas);
+//					}
+//				}
 				
 										
-				}
+	
 				
 				
 				for (int i = 0; i < Laser.numLasers; i++) {
@@ -186,6 +203,13 @@ public class AwaisFinalGameController {
 					collidedLaser = player.collisionLaser(l);
 				
 					if (collidedLaser) {
+				
+						
+						}
+		
+						
+						
+						
 						
 						
 						Player.curImageName = Player.playerDead;
@@ -213,7 +237,7 @@ public class AwaisFinalGameController {
 				}
 					
 				
-				powerup.move();
+				//powerup.move();
 				
 				for (int i = 0; i < Laser.numLasers; i++) {
 					laserList.get(i).move();
