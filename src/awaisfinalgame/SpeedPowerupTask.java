@@ -1,19 +1,18 @@
 package awaisfinalgame;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SpeedPowerupTask extends TimerTask{
 
-	// seconds powered up
-	public static int numSecondPoweredUp = 0;
+	int secondsPowerup = 0;
+	
+	double changingSpeed = 0.6;
 	
 	static String stillSpeedImage = "images/playerStillSpeed.png";
 	static String movingPlayerSpeed = "images/playerMovingSpeed1.png";
 	static String movingPlayerSpeed2 = "images/playerMovingSpeed2.png";
 	
-
     Timer timer;
 
 	public SpeedPowerupTask(Timer t) {
@@ -21,38 +20,42 @@ public class SpeedPowerupTask extends TimerTask{
     
 	}
     
-	public void run() {
+	public void run() {		
 		
-		
-		double changingSpeed = 0.6;
-		
-		
-		if (numSecondPoweredUp == 0) {
- 			Coin.speed -= changingSpeed;
-			Missile.speed -= changingSpeed;
-			Laser.speed -= changingSpeed;
-            // player.makeBlue();
-			Player.stillPlayerImage = stillSpeedImage;
-			Player.movingPlayerImage = movingPlayerSpeed;
-			Player.movingPlayerImage2 = movingPlayerSpeed2;
-			numSecondPoweredUp += 1;
+		if (secondsPowerup == 0) {
+			slowDownSpeed();			
+			setPlayerBlue();
+			secondsPowerup += 1;
 		} 
 
-		else if (numSecondPoweredUp == 10) {
-			Missile.speed += changingSpeed;
-			Laser.speed += changingSpeed;
-			Coin.speed += changingSpeed;
-			Player.stillPlayerImage ="images/playerStill.png";
-			Player.movingPlayerImage = "images/playerMoving1.png";
-			Player.movingPlayerImage2 = "images/playerMoving2.png";
-			
-			numSecondPoweredUp = 0;
+		else if (secondsPowerup == 10) {
+			resetSpeed();
+			Player.setPlayerNormal();
+			secondsPowerup = 0;
 			timer.cancel();
 		} 
 		else {
-			numSecondPoweredUp++;
+			secondsPowerup++;
 			
 		}
-
+	}
+	
+	public void setPlayerBlue() {
+		Player.stillPlayerImage = stillSpeedImage;
+		Player.movingPlayerImage1 = movingPlayerSpeed;
+		Player.movingPlayerImage2 = movingPlayerSpeed2;
+	}
+	
+	
+	public void slowDownSpeed() {
+		Coin.speed -= changingSpeed;
+		Missile.speed -= changingSpeed;
+		Laser.speed -= changingSpeed;
+	}
+	
+	public void resetSpeed() {
+		Coin.speed -= changingSpeed;
+		Missile.speed -= changingSpeed;
+		Laser.speed -= changingSpeed;
 	}
 }

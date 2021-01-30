@@ -3,9 +3,7 @@ package awaisfinalgame;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class SpeedPowerup {
-	
 
 	public static void applyPowerup() {
 		Timer timer = new Timer();

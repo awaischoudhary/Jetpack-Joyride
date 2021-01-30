@@ -8,20 +8,16 @@ import javafx.scene.image.Image;
 
 public class Missile {
 
-	static int numMissiles = 1;
-	 
-	// x and y positions
-	static double x;
-	double y;
-	
 	static double speed = 10;
-	
+
+	// x and y positions
+	double x;
+	double y;
 	double dx= 0;
 	
-	// get the banana image 
 	String curMissile = "images/missile1.png";
 	Image image = new Image(curMissile, 60, 30, false, false);
-	
+		
 	// set canvas and graphics context
 	GraphicsContext gc;
 	@FXML
@@ -32,29 +28,20 @@ public class Missile {
 		this.gameCanvas = gameCanvas;
 		randomMissile();
 	}
-
-	public Missile(String imageName, GraphicsContext gc, Canvas gameCanvas) {
-		this.curMissile = imageName;
-		this.gc = gc;
-		this.gameCanvas = gameCanvas;
-		randomMissile();
-	}
-
+	
 	public void randomMissile() {
 		this.x = 1100;
 		this.y = (int)(Math.random()*(400-this.image.getHeight()));
 	}
 	
-	public void move() {
+	public void move(MissileWarning missileWarning) {
 		
 		if (MissileWarning.curMissileWarning == MissileWarning.missileFinalWarning) {
-			this.y = MissileWarning.y;
+			this.y = missileWarning.getY();
 			this.dx = -this.speed;	
 			this.x += this.dx;
 		}
 		
-		
-
 		gc.drawImage(this.image, this.x, this.y);
 		
 	}
@@ -73,23 +60,6 @@ public class Missile {
 
 	public void setY(double y) {
 		this.y = y;
-	}
-
-
-	public double getDx() {
-		return dx;
-	}
-
-	public void setDx(double dx) {
-		this.dx = dx;
-	}
-
-	public String getImageName() {
-		return curMissile;
-	}
-
-	public void setImageName(String imageName) {
-		this.curMissile = imageName;
 	}
 	
 	public Rectangle2D getBoundary() {
