@@ -1,6 +1,7 @@
 package awaisfinalgame;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
@@ -17,7 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 
@@ -26,6 +27,7 @@ public class AwaisFinalGameController {
 	// setting the canvas
 	@FXML
 	Canvas gameCanvas;
+
 
 	// setting the graphics context, the gameScene, and stage
 	GraphicsContext gc;
@@ -42,6 +44,10 @@ public class AwaisFinalGameController {
 	int powerupHit = (int)(Math.random()*100);
 	double bgSpeed1 = 2;
 	static boolean invisible = false;
+	
+	public AudioClip bgMusic = new AudioClip(Paths.get("src/sounds/BackgroundMusic.mp3").toUri().toString());
+	public AudioClip laserHitSound = new AudioClip(Paths.get("src/sounds/grav_step_1.wav").toUri().toString());
+
 
 	int iterations = 0;
 
@@ -54,7 +60,11 @@ public class AwaisFinalGameController {
 	}
 
 	public void gameLoop() {
+		
 
+		bgMusic.setCycleCount(AudioClip.INDEFINITE);
+		bgMusic.play();
+		
 		gc = gameCanvas.getGraphicsContext2D();
 		Image background1 = new Image("images/background.png", 1000, 500, false, false);
 		Image background2 = new Image("images/background.png", 1000, 500, false, false);
@@ -213,7 +223,7 @@ public class AwaisFinalGameController {
 				
 					if (collidedLaser && !invisible) {
 						
-						
+						laserHitSound.play();
 						Player.curImageName = Player.playerDead;
 						stop();
 

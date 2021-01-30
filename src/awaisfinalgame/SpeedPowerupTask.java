@@ -24,15 +24,13 @@ public class SpeedPowerupTask extends TimerTask{
 	public void run() {
 		
 		
-		double missilePrevSpeed = Missile.speed;
-		double laserPrevSpeed = Laser.speed;
-		double coinPrevSpeed = Coin.speed;
+		double changingSpeed = 0.6;
 		
 		
 		if (numSecondPoweredUp == 0) {
- 			Coin.speed = 2;
-			Missile.speed = 4;
-			Laser.speed = 2;
+ 			Coin.speed -= changingSpeed;
+			Missile.speed -= changingSpeed;
+			Laser.speed -= changingSpeed;
             // player.makeBlue();
 			Player.stillPlayerImage = stillSpeedImage;
 			Player.movingPlayerImage = movingPlayerSpeed;
@@ -41,9 +39,9 @@ public class SpeedPowerupTask extends TimerTask{
 		} 
 
 		else if (numSecondPoweredUp == 10) {
-			Missile.speed = 6+ missilePrevSpeed;
-			Laser.speed = 0.5+laserPrevSpeed;
-			Coin.speed = 0.5+coinPrevSpeed;
+			Missile.speed += changingSpeed;
+			Laser.speed += changingSpeed;
+			Coin.speed += changingSpeed;
 			Player.stillPlayerImage ="images/playerStill.png";
 			Player.movingPlayerImage = "images/playerMoving1.png";
 			Player.movingPlayerImage2 = "images/playerMoving2.png";

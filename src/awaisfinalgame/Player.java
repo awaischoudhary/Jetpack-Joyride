@@ -1,5 +1,6 @@
 package awaisfinalgame;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.media.AudioClip;
 
 public class Player {
 
@@ -35,6 +37,8 @@ public class Player {
 	static String curImageName = stillPlayerImage;
 	Image image = new Image(curImageName, 60, 50, false, false);
 	
+
+	public AudioClip stepHitSound = new AudioClip(Paths.get("src/sounds/grav_step_4.wav").toUri().toString());
 
 	long iterationsSincePlayerChange = 0;
 
@@ -135,6 +139,7 @@ public class Player {
 	    		}
 			   iterationsSincePlayerChange = 0;
 				score++;
+
 			}
 			
 			iterationsSincePlayerChange++;

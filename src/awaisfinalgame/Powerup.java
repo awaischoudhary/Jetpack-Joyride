@@ -51,7 +51,7 @@ public class Powerup {
 	}
 
 	public void move() {
-		if (Player.score % 40 == 0 && Player.score > 1) {
+		if (Player.score % 150 == 0 && Player.score > 1) {
 			this.speed = 2;
 			this.y = 100;
 		}
