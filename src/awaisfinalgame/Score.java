@@ -1,3 +1,8 @@
+/* Program Name: AwaisFinalGame
+ * Programmer: Awais Choudhary
+ * Date: February 2, 2020
+ * Description: Score class, all score related methods
+ */
 package awaisfinalgame;
 
 import javafx.fxml.FXML;
@@ -15,14 +20,16 @@ public class Score {
 	@FXML
 	Canvas gameCanvas;
 
-	
+	// Score constructor 
 	public Score(GraphicsContext gc, Canvas gameCanvas) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
 	}
 	
-	
-	public void display(Player player) {
+	// Description: displays the score 
+	// Precondition: Takes in player
+	// Postcondition: score is displayed on canvas
+	public void displayingScore(Player player) {
 		String scoreString = Player.score + "m";
 		gc.setFont(Font.font("Rockwell", FontWeight.BOLD, 20));
 		gc.setFill(Color.WHITE); 

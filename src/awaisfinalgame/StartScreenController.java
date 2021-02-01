@@ -1,3 +1,8 @@
+/* Program Name: AwaisFinalGame
+ * Programmer: Awais Choudhary
+ * Date: February 2, 2020
+ * Description: Start screen controller, contains all start screen methods
+ */
 package awaisfinalgame;
 
 import java.io.IOException;
@@ -11,14 +16,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
 public class StartScreenController {
 	
 	Scene gameScene;
 	Stage stage;
 	
+	// creating a second stage for instructions
 	static Stage secondaryStage;
 
+	// Description: button click buttons handler
+	// Precondition: Takes in the action even
+	// Postcondition: Does actions depending on button clicked
 	public void buttonClickHandler(ActionEvent evt) throws IOException {
 		Button clickedButton = (Button) evt.getTarget();
 		String buttonLabel = clickedButton.getText();
@@ -37,6 +45,9 @@ public class StartScreenController {
 		}
 	}
 	
+	// Description: Change to game method
+	// Precondition: Takes in the action even
+	// Postcondition: Changes game scene to main game
 	public void changeToGame(ActionEvent evt) throws IOException {	
         FXMLLoader loader = new FXMLLoader();  
         loader.setLocation(getClass().getResource("AwaisFinalGame.fxml"));  
@@ -56,6 +67,9 @@ public class StartScreenController {
         stage.show();
 }
 	
+	// Description: Open instructions stage
+	// Precondition: Does not take in anything
+	// Postcondition: opens a new instructions fxml on a new stage
 	private void openInstructions() {
 		try {
 			// load the pop up you created
@@ -73,7 +87,9 @@ public class StartScreenController {
 		}
 	}
 
-
+	// Description: Close instructions window
+	// Precondition: Takes in the action even
+	// Postcondition: stage closes when exit
 	public void closeCurrentWindow(final ActionEvent evt) {
 		final Node source = (Node) evt.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();

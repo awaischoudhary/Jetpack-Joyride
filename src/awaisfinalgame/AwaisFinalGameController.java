@@ -1,7 +1,7 @@
 /* Program Name: AwaisFinalGame
  * Programmer: Awais Choudhary
  * Date: February 2, 2020
- * Description: Main controller, where game loop and animation timer is
+ * Description: Main game controller, where game loop and animation timer is
  */
 package awaisfinalgame;
 
@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
+
 public class AwaisFinalGameController {
 
 	@FXML
@@ -34,12 +35,6 @@ public class AwaisFinalGameController {
 	Scene gameScene;
 	Stage stage;
 	
-	// getting the fxml labels for scores
-	@FXML 
-	Label displayScore;
-	@FXML 
-	Label displayFinalScore;
-
 	// gives a random powerup
 	int randomPowerup = (int) (Math.random() * 100);
 
@@ -160,17 +155,21 @@ public class AwaisFinalGameController {
 				coinColliding(player, coinList);
 		
 				// displaying the scores
-				score.display(player);
+				score.displayingScore(player);
 
 				// moving the objects
-				powerup.move();					
+				powerup.move();	
+				
+				// for loop to move all coins in ArrayList
 				for (int i = 0; i < Coin.numCoins; i++) {
 					coinList.get(i).move(i);
 				} 
 
+				// for loop to move all lasers in ArrayList
 				for (int i = 0; i < Laser.numLasers; i++) {
 					laserList.get(i).move();
-				}				
+				}		
+				
 				missileWarning.move(player, missile);
 				missile.move(missileWarning);	
 				player.move();
@@ -196,20 +195,6 @@ public class AwaisFinalGameController {
 		Powerup.speed = 0;
 	}
 	
-
-	// Description: Resets values when playing again
-	// Precondition: Does not take in anything
-	// Postcondition: speeds and images are reset
-	public void startGame() {
-		Background.bgSpeed = 2;
-		Laser.speed = 2.1;
-		Coin.speed = 2.1;
-		Player.score = 0;
-		Coin.coinScore = 0;
-		Player.setPlayerNormal(); 
-		MissileWarning.curMissileWarning = MissileWarning.missileWarning;
-	}
-	
 	// Description: Apply actions when powerup is collided
 	// Precondition: Takes in player and powerup
 	// Postcondition: player has a random powerup
@@ -219,7 +204,7 @@ public class AwaisFinalGameController {
 		if (player.collisionPowerup(powerup)) {
 			
 			// check for see if player gets pixel collision
-			if (player.pixelCollision(powerup.getImage(), powerup.getX(), powerup.getY())) {
+			if (player.pixelColliding(powerup.getImage(), powerup.getX(), powerup.getY())) {
 				
 				// reset powerup position and play sound
 				int resetPosition = 1000;
@@ -244,6 +229,8 @@ public class AwaisFinalGameController {
 	// Precondition: Takes in player and coin array list
 	// Postcondition: player picks up coins 
 	public void coinColliding(Player player, ArrayList<Coin> coinList) {
+		
+		// for loop to go through array list of coins
 		for (int i = 0; i < Coin.numCoins; i++) {
 			Coin c = coinList.get(i);
 
@@ -251,7 +238,7 @@ public class AwaisFinalGameController {
 			if (player.collisionCoin(c)) {
 				
 				// if player collides with coin pixels
-				if (player.pixelCollision(c.getImage(), c.getX(), c.getY())) {
+				if (player.pixelColliding(c.getImage(), c.getX(), c.getY())) {
 
 					// play sound, add score, and spawn coin again
 					coinPickup.play();
@@ -271,7 +258,7 @@ public class AwaisFinalGameController {
 		if (player.collisionMissile(missile) && !InvisiblePowerupTask.invisible) {
 			
 			// check if player collides with missile pixels
-			if (player.pixelCollision(missile.getImage(), missile.getX(), missile.getY())) {
+			if (player.pixelColliding(missile.getImage(), missile.getX(), missile.getY())) {
 				
 				// set the missile off screen, play explode, and end speeds
 				int offScreen = -100;				
@@ -288,6 +275,8 @@ public class AwaisFinalGameController {
 	// Precondition: Takes in player and laser array list
 	// Postcondition: player dies when collided
 	public void laserColliding(Player player, ArrayList<Laser> laserList) {
+		
+		// for loop to go through all lasers
 		for (int i = 0; i < Laser.numLasers; i++) {
 			Laser l = laserList.get(i);
 
@@ -295,7 +284,7 @@ public class AwaisFinalGameController {
 			if (player.collisionLaser(l) && !InvisiblePowerupTask.invisible) {
 
 				// check if player collides with laser pixels
-				if (player.pixelCollision(l.getImage(), l.getX(), l.getY())) {
+				if (player.pixelColliding(l.getImage(), l.getX(), l.getY())) {
 					
 					// play sound, end speed, and make player dead
 					laserHit.play();
@@ -308,9 +297,9 @@ public class AwaisFinalGameController {
 	}
 	
 	
-	
-	
-	
+	// Description: Changes game scene to end screen
+	// Precondition: Does not take in anything
+	// Postcondition: scene is changed
 	public void changeToEndScreen() {
 
 		try {
@@ -321,7 +310,8 @@ public class AwaisFinalGameController {
 	        Scene scene = new Scene(sceneParent);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
-	        AwaisFinalGameController controller = loader.getController();
+			// referencing end screen controller to getScore method
+	        EndScreenController controller = loader.getController();
 	        controller.getScore(Player.score, Coin.coinScore);
 			stage.setScene(scene);
 			stage.show();
@@ -330,47 +320,6 @@ public class AwaisFinalGameController {
 		}
 
 	}
-	
-	public void getScore(int metersScore, int coinScore) {	
-		String score = metersScore + " meters + " + coinScore + " coins";	
-		int finalScore =  metersScore + coinScore;
-		displayScore.setText(score);
-		displayFinalScore.setText("FINAL SCORE: "+ finalScore);
-	}
-
-
-	public void endClickHandler(ActionEvent evt) throws IOException {
-		Button clickedButton = (Button) evt.getTarget();
-		String buttonLabel = clickedButton.getText();
-
-		if (buttonLabel.equals("PLAY AGAIN")) {
-			Player.curImageName = Player.movingPlayer1;
-			startGame();
-			changeToGame(evt);
-		} else if (buttonLabel.equals("QUIT")) {
-			System.exit(0);
-		}
-	}
-
-	public void changeToGame(ActionEvent evt) throws IOException {	
-        FXMLLoader loader = new FXMLLoader();  
-        loader.setLocation(getClass().getResource("AwaisFinalGame.fxml"));  
-		BorderPane root = (BorderPane) loader.load();
-		Scene scene = new Scene(root, 1000, 500);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-        AwaisFinalGameController controller = loader.getController();     
-
-        Stage stage = (Stage)((Node)evt.getSource()).getScene().getWindow();
-         
-        stage.setScene(scene);
-        controller.setScene(stage);
-        controller.setStage(stage);
-    	controller.gameLoop();
-      
-        stage.show();
-}
-	
 
 
 }

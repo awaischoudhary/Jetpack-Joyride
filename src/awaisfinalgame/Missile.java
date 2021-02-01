@@ -1,3 +1,8 @@
+/* Program Name: AwaisFinalGame
+ * Programmer: Awais Choudhary
+ * Date: February 2, 2020
+ * Description: Missile class, all related missile methods
+ */
 package awaisfinalgame;
 
 import javafx.fxml.FXML;
@@ -7,12 +12,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Missile {
-
+	
+	// missile speed
 	static double speed = 0;
 
 	// x and y positions
-	static double x;
-	static double y;
+	double x;
+	double y;
 	double dx= 0;
 	
 	String curMissile = "images/missile1.png";
@@ -23,29 +29,37 @@ public class Missile {
 	@FXML
 	Canvas gameCanvas;
 
+	// Missile constructor
 	public Missile(GraphicsContext gc, Canvas gameCanvas) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
 		randomMissile();
 	}
 	
+	// Description: Sets the missile at a random spot
+	// Precondition: Does not take in anything
+	// Postcondition: Missile is set at a random y
 	public void randomMissile() {
 		this.x = 1100;
 		this.y = (int)(Math.random()*(400-this.image.getHeight()));
 	}
 	
+	// Description: moving the laser
+	// Precondition: takes in missileWarning
+	// Postcondition: moves the missile
 	public void move(MissileWarning missileWarning) {
 		
+		// check if missileWarning has reached the final warning, if so move missile with speed
 		if (MissileWarning.curMissileWarning == MissileWarning.missileFinalWarning) {
 			this.speed = 10;
 			this.y = missileWarning.getY();
 			this.dx = -this.speed;	
 			this.x += this.dx;
-		}
-		
-		gc.drawImage(this.image, this.x, this.y);
-		
+		}	
+		gc.drawImage(this.image, this.x, this.y);	
 	}
+	
+	// getters and setters
 	public Image getImage() {
 		return image;
 	}
@@ -66,6 +80,9 @@ public class Missile {
 		this.y = y;
 	}
 	
+	// Description: Getting the rectangular boundary of image
+	// Precondition: Does not take in anything
+	// Postcondition: return the rectangle boundary
 	public Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());
 	}

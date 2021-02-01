@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Program Name: AwaisFinalGame
+      Programmer: Awais Choudhary
+      Date: February 2, 2020
+      Description: FXML for the settings screen of game -->
+      
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>

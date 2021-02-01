@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Program Name: AwaisFinalGame
+      Programmer: Awais Choudhary
+      Date: February 2, 2020
+      Description: FXML for the main screen of game -->
 
       
 <?import javafx.scene.canvas.Canvas?>

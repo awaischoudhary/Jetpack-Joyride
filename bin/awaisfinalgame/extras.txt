@@ -1,0 +1,14 @@
+Jetpack Joyride Extras
+Awais Choudhary
+
+Platform Game
+-Pixel Perfect Collision (on all collisions)
+-Gravity (velocity, acceleration, & physics concept)
+-Animations (Normal & Power-up versions)
+-Scrolling Background (Infinite loop of background)
+-TimerTask (Extending to timer task, using for powerups)
+-PixelReader (new functions)
+-Sounds 
+-Music (Indefinite)
+-AudioClip 
+-Mouse Click & Keyboard together
