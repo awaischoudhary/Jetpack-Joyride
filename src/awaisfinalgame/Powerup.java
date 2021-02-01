@@ -12,7 +12,7 @@ public class Powerup {
 	double x;
 	double y;
 	double dx = 0;
-	double speed = 0;
+	static double speed = 0;
 
 	String imageName = "images/powerup.png";
 	Image image = new Image(imageName, 60, 60, false, false);
@@ -55,6 +55,10 @@ public class Powerup {
 			this.x = 1100;
 			this.speed = 0;
 		}
+	}
+	
+	public Image getImage() {
+		return image;
 	}
 	
 	public double getX() {

@@ -1,3 +1,8 @@
+/* Program Name: AwaisFinalGame
+ * Programmer: Awais Choudhary
+ * Date: February 2, 2020
+ * Description: Main class, where start screen is launched
+ */
 package awaisfinalgame;
 
 import javafx.application.Application;
@@ -6,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-public class Main extends Application {
+public class Main extends Application {	
+	
+	// launching the start screen
 	@Override
 	public void start(Stage primaryStage) {
 		try {

@@ -1,3 +1,8 @@
+/* Program Name: AwaisFinalGame
+ * Programmer: Awais Choudhary
+ * Date: February 2, 2020
+ * Description: Background class, where we move the background
+ */
 package awaisfinalgame;
 
 import javafx.fxml.FXML;
@@ -25,12 +30,14 @@ public class Coin {
 	@FXML
 	Canvas gameCanvas;
 
+	// coin constructor
 	public Coin(GraphicsContext gc,  Canvas gameCanvas, int coinIndex) {
 		this.gc = gc;
 		this.gameCanvas = gameCanvas;
 		this.y = coinY;
 		this.x = 1000+25*coinIndex;
 	}
+	
 	
 	public void randomCoin(int coinIndex) {
 		this.x = 1050;	
@@ -58,6 +65,27 @@ public class Coin {
 	public void collisionRespawning() {
 		this.y = 600;
 	}
+
+	// getters and setters
+	public Image getImage() {
+		return image;
+	}
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+	
 	
 	public Rectangle2D getBoundary() {
 		return new Rectangle2D(this.x, this.y, this.image.getWidth(), this.image.getHeight());

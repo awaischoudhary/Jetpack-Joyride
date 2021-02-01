@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 public class InvisiblePowerupTask extends TimerTask {
 
-	static String stillInvisibleImage = "images/playerStillInvisible.png";
+	static String stillInvisibleImage = "images/playerJumpInvisible.png";
 	static String movingPlayerInvisible = "images/playerMovingInvisible1.png";
 	static String movingPlayerInvisible2 = "images/playerMovingInvisible2.png";
 
@@ -40,8 +40,8 @@ public class InvisiblePowerupTask extends TimerTask {
 	}
 	
 	public void setPlayerGrey() {
-		Player.stillPlayerImage = stillInvisibleImage;
-		Player.movingPlayerImage1 = movingPlayerInvisible;
-		Player.movingPlayerImage2 = movingPlayerInvisible2;
+		Player.jumpPlayer = stillInvisibleImage;
+		Player.movingPlayer1 = movingPlayerInvisible;
+		Player.movingPlayer2 = movingPlayerInvisible2;
 	}
 }

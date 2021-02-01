@@ -14,8 +14,8 @@ public class MissileWarning {
 	long iterationsPlacing = 0;
 
 	// x and y positions
-	double x;
-	double y;
+	static double x;
+	static double y;
 	double dy= 0;
 	
 	// get the banana image 
@@ -39,7 +39,7 @@ public class MissileWarning {
 	}
 	
 	public void randomMissileWarning() {
-		this.x = 950;
+		this.x = 950+100;
 		this.y = (int)(Math.random()*(400-this.image.getHeight()));
 	}
 	
@@ -47,6 +47,7 @@ public class MissileWarning {
 		if (curMissileWarning == missileWarning) {
 			this.y = player.getY();
 		}
+		this.x = 950;
 		timingMissileWarning(missile);
 		
 		gc.drawImage(this.image, this.x, this.y);
@@ -55,9 +56,10 @@ public class MissileWarning {
 	
 	public void timingMissileWarning(Missile missile) {
 	
+		
 		if (iterationsWarning > 100) {
 			curMissileWarning = missileFinalWarning;
-			warningSound.play();
+			//warningSound.play();
 			iterationsWarning = 0;
 		}
 		iterationsWarning++;
@@ -78,9 +80,21 @@ public class MissileWarning {
 		
 		
 	}
-	
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
 	public double getY() {
 		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
 	}
 
 	public Rectangle2D getBoundary() {

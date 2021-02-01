@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
 
 public class Missile {
 
-	static double speed = 10;
+	static double speed = 0;
 
 	// x and y positions
-	double x;
-	double y;
+	static double x;
+	static double y;
 	double dx= 0;
 	
 	String curMissile = "images/missile1.png";
@@ -37,6 +37,7 @@ public class Missile {
 	public void move(MissileWarning missileWarning) {
 		
 		if (MissileWarning.curMissileWarning == MissileWarning.missileFinalWarning) {
+			this.speed = 10;
 			this.y = missileWarning.getY();
 			this.dx = -this.speed;	
 			this.x += this.dx;
@@ -44,6 +45,9 @@ public class Missile {
 		
 		gc.drawImage(this.image, this.x, this.y);
 		
+	}
+	public Image getImage() {
+		return image;
 	}
 
 	public double getX() {
