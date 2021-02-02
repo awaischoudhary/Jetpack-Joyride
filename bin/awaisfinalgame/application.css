@@ -36,3 +36,18 @@
     -fx-font-size: 44px;
     -fx-padding: 10 20 10 20;
 }
+
+#instructions-title {
+	-fx-focus-color: transparent;
+	-fx-background-insets: -1, 0, 1, 1;
+	-fx-background-color: linear-gradient(#ff6700, #ff8532);	
+}
+
+#instructions-exit{
+	-fx-focus-color: transparent;
+	-fx-background-insets: -1, 0, 1, 1;
+	-fx-background-color: linear-gradient(#ff6700, #ff8532);	
+	-fx-font-size: 24px;
+
+}
+

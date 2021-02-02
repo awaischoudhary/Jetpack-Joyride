@@ -111,21 +111,9 @@ public class MissileWarning {
 		}		
 	}
 
-	// getters and setters
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
+	// getter and setter
 	public double getY() {
 		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
 	}
 
 	// Description: Getting the rectangular boundary of image

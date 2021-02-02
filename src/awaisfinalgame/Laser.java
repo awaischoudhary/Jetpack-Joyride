@@ -74,28 +74,13 @@ public class Laser {
 	public Image getImage() {
 		return image;
 	}
+	
 	public double getX() {
 		return x;
 	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
+	
 	public double getY() {
 		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-	
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
 	}
 	
 	// Description: Getting the rectangular boundary of image

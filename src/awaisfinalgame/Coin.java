@@ -97,17 +97,9 @@ public class Coin {
 		return x;
 	}
 
-	public void setX(double x) {
-		this.x = x;
-	}
-
 	public double getY() {
 		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
+	}	
 	
 	// Description: Getting the rectangular boundary of image
 	// Precondition: Does not take in anything

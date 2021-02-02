@@ -76,10 +76,6 @@ public class Missile {
 		return y;
 	}
 
-	public void setY(double y) {
-		this.y = y;
-	}
-	
 	// Description: Getting the rectangular boundary of image
 	// Precondition: Does not take in anything
 	// Postcondition: return the rectangle boundary

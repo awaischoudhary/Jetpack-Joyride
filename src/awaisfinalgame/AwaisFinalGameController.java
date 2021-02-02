@@ -188,7 +188,7 @@ public class AwaisFinalGameController {
 	// Description: end speeds when player dies 
 	// Precondition: Does not take in anything
 	// Postcondition: speeds are set to 0
-	public void endSpeed() {
+	public void endingSpeed() {
 		Background.bgSpeed = 0;
 		Laser.speed = 0;
 		Coin.speed = 0;
@@ -265,7 +265,7 @@ public class AwaisFinalGameController {
 				missileExplode.play();
 				Player.curImageName = Player.playerDead;
 				missile.setX(offScreen);
-				endSpeed();
+				endingSpeed();
 			}
 		}
 	}
@@ -288,7 +288,7 @@ public class AwaisFinalGameController {
 					
 					// play sound, end speed, and make player dead
 					laserHit.play();
-					endSpeed();
+					endingSpeed();
 					Player.curImageName = Player.playerDead;
 				}
 
