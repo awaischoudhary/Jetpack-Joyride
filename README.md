@@ -2,6 +2,8 @@
 
 A modern remake of the popular *Jetpack Joyride* game, built using **Java**, **JavaFX**, **HTML**, and **CSS**. This project showcases clean, scalable code through the application of **Object-Oriented Programming (OOP)**, **Design Patterns**, and **SOLID** principles. The game features fluid gameplay mechanics, an intuitive user interface, and an efficient management system for various game states.
 
+![jetpack-home](https://github.com/user-attachments/assets/7ba10efb-ff5d-4a5a-83a5-a10c1a366016)
+
 ## Features
 
 - **State Management**: Efficient handling of game states like menu, gameplay, and game-over using the **State Pattern** for seamless transitions.
