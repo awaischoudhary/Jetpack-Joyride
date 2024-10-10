@@ -10,7 +10,7 @@ A modern remake of the popular *Jetpack Joyride* game, built using **Java**, **J
 - **Scalability**: Designed with **SOLID** principles to ensure maintainability and extensibility, making it easy to add new features like power-ups, enemies, or levels.
 - **Design Patterns**: Implemented **Singleton** for game control and **Observer** for event handling, keeping the architecture modular and clean.
 
-![Jetpack gameplay](https://github.com/awaischoudhary/Jetpack-Joyride/issues/1#issue-2577499340)
+![jetpack-game](https://github.com/user-attachments/assets/ee1fc181-7775-44a2-8368-49a8b072a484)
 
 ## Technologies Used
 
